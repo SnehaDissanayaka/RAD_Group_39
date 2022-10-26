@@ -10,6 +10,18 @@ export const getDoctors = async (req, res) => {
     }
 }
 
+export const getDoctor = async (req, res) => {
+    const { reg } = req.params;
+
+    try {
+        const doctor = await DoctorData.findById(reg);
+
+        res.status(200).json(doctor);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const createDoctor = async (req, res) => {
 
     const Add_Dr = req.body;
@@ -34,14 +46,14 @@ export const putDoctor = async (req, res) => {
         address: req.body.address
     };
     const reg = req.params.reg;
-    await DoctorData.findOneAndUpdate({ regNo: reg }, { $set: Update_Dr }, (req, res, err) => {
-        try {
-            console.log(err)
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
+
+    try {
+        await DoctorData.findByIdAndUpdate(reg, Update_Dr, { new: true });
+        res.status(200).json(Update_Dr);
+    }
+    catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }
 
 export const deleteDoctor = async (req, res) => {

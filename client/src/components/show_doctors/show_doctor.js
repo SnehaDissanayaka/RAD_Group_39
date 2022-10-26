@@ -33,18 +33,16 @@ export default function ShowDoctorsTable() {
         address: '',
     })
 
-    const updateDoctor = (reg) => {
-        setupdatedDoctor(prevInput => {
-            return (
-                {
-                    ...prevInput,
-                    reg: reg,
-                }
-            )
+    const findDoctor = (reg) => {
+       axios.get(`http://localhost:5000/doctors/${reg}`).then((doctor) => {
+            setupdatedDoctor(doctor.data);
+            console.log(doctor.data);
         })
+
     }
     const putDoctor = (reg) => {
-        axios.put(`http://localhost:5000/doctors/${reg}`, putDoctor).then(() => {
+        
+        axios.put(`http://localhost:5000/doctors/${reg}`, updatedDoctor).then(() => {
             window.location.reload(false);
         })
     }
@@ -94,7 +92,7 @@ export default function ShowDoctorsTable() {
 
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Button variant="outlined" onClick={() => updateDoctor(doctor.regNo)} style={{ backgroundColor: '#FFFFFF', color: '#120FFF' }}>Update</Button>
+                                    <Button variant="outlined" onClick={() => findDoctor(doctor._id)} style={{ backgroundColor: '#FFFFFF', color: '#120FFF' }}>Update</Button>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -129,7 +127,7 @@ export default function ShowDoctorsTable() {
                     setupdatedDoctor({ ...updatedDoctor, address: event.target.value })
                 }} />
                 <br />
-                <Button variant="primary" onClick={() => putDoctor(updatedDoctor.regNo)} style={{ backgroundColor: '#12824C', color: '#FFFFFF' }}>Update Doctor</Button>
+                <Button variant="primary" onClick={() => putDoctor(updatedDoctor._id)} style={{ backgroundColor: '#12824C', color: '#FFFFFF' }}>Update Doctor</Button>
             </Box>
 
         </>

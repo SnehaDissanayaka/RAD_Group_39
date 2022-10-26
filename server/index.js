@@ -5,6 +5,8 @@ import cors from 'cors';
 
 
 import doctorRoutes from './routes/admin.js';
+import nurseRoute from './routes/doctor.js';
+import PatientRoute from './routes/nurse.js';
 
 const app = express();
 
@@ -13,6 +15,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use('/doctors', doctorRoutes);
+app.use('/nurses',nurseRoute);
+app.use('/patients',PatientRoute);
 
 const CONNECTION_URL = 'mongodb+srv://Admin:hms123@cluster0.kuzxwbe.mongodb.net/?retryWrites=true&w=majority';
 
